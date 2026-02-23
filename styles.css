@@ -1070,6 +1070,96 @@ textarea {
   height: 42px;
 }
 
+.itinerary-composer {
+  margin-bottom: 12px;
+}
+
+.itinerary-new {
+  background: linear-gradient(180deg, #fbfdff, #fff);
+}
+
+.itinerary-list {
+  display: grid;
+  gap: 10px;
+}
+
+.itinerary-empty {
+  border: 1px dashed #dbe6f5;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fbfdff;
+}
+
+.itinerary-row {
+  display: grid;
+  gap: 6px;
+}
+
+.itinerary-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.itinerary-card-main {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.itinerary-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.itinerary-card-head strong {
+  font-size: 0.95rem;
+}
+
+.itinerary-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.itinerary-card-meta span {
+  border: 1px solid #edf2fb;
+  background: #f8fbff;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.itinerary-card-sub,
+.itinerary-card-notes {
+  font-size: 0.82rem;
+}
+
+.itinerary-card-costs {
+  display: grid;
+  gap: 4px;
+  font-size: 0.82rem;
+}
+
+.itinerary-card-actions {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+
+.itinerary-table-legacy[hidden] {
+  display: none !important;
+}
+
 .table-wrap {
   overflow: auto;
   border: 1px solid var(--line);
@@ -1347,6 +1437,18 @@ td {
     grid-template-columns: 1fr;
   }
 
+  .itinerary-card {
+    grid-template-columns: 1fr;
+  }
+
+  .itinerary-card-actions {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-content: initial;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
   .day-detail-cost {
     text-align: left;
     justify-items: start;
@@ -1394,6 +1496,11 @@ td {
 
   .activity-form {
     grid-template-columns: 1fr;
+  }
+
+  .itinerary-card-actions {
+    grid-auto-flow: row;
+    grid-auto-columns: initial;
   }
 
   .dashboard-quick-form {

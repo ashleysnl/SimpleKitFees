@@ -149,6 +149,7 @@ const uiState = {
   appReady: false,
   dashboardQuickEdit: null,
   dashboardQuickPlacement: null,
+  itineraryFormPlacement: null,
   itineraryEditId: null,
   costItemEditId: null,
 };
@@ -200,6 +201,8 @@ const el = {
   dashboardTripTitle: document.getElementById("dashboardTripTitle"),
   dashboardTripMeta: document.getElementById("dashboardTripMeta"),
   dashboardTimelineRange: document.getElementById("dashboardTimelineRange"),
+  itineraryComposer: document.getElementById("itineraryComposer"),
+  itineraryList: document.getElementById("itineraryList"),
   activitiesTableBody: document.querySelector("#activitiesTable tbody"),
   costItemsTableBody: document.querySelector("#costItemsTable tbody"),
   plannedBudgetPct: document.getElementById("plannedBudgetPct"),
@@ -729,6 +732,7 @@ function resetActivityForm() {
 function setActivityFormEditMode(item) {
   const inputs = el.activityInputs;
   uiState.itineraryEditId = item.id;
+  uiState.itineraryFormPlacement = { type: "edit", id: item.id };
   inputs.mode.value = "edit";
   inputs.editId.value = item.id;
   inputs.date.value = item.date || "";
@@ -744,6 +748,110 @@ function setActivityFormEditMode(item) {
   el.activityFormTitle.textContent = "Edit Itinerary Item";
   el.activityFormSubmit.textContent = "Save Changes";
   el.activityFormCancelEdit.hidden = false;
+}
+
+function showItineraryNewItemForm() {
+  uiState.itineraryFormPlacement = { type: "new" };
+  resetActivityForm();
+  uiState.itineraryFormPlacement = { type: "new" };
+}
+
+function hideItineraryInlineForm() {
+  uiState.itineraryFormPlacement = null;
+  uiState.itineraryEditId = null;
+  if (el.activityForm) el.activityForm.hidden = true;
+}
+
+function mountItineraryFormInline() {
+  const form = el.activityForm;
+  const list = el.itineraryList;
+  const composer = el.itineraryComposer;
+  if (!form || !list || !composer) return;
+  const placement = uiState.itineraryFormPlacement;
+  if (!placement) {
+    form.hidden = true;
+    return;
+  }
+
+  let slot = null;
+  if (placement.type === "new") {
+    slot = composer.querySelector('[data-inline-slot="new"]');
+  } else if (placement.type === "edit" && placement.id) {
+    slot = list.querySelector(`[data-inline-slot="edit"][data-item-id="${placement.id}"]`);
+  }
+  if (!slot) {
+    form.hidden = true;
+    return;
+  }
+  slot.appendChild(form);
+  form.hidden = false;
+}
+
+function renderItineraryList(summary) {
+  if (!el.itineraryComposer || !el.itineraryList) return;
+
+  el.itineraryComposer.innerHTML = `
+    <div class="day-detail-new itinerary-new">
+      <div class="day-detail-new-head">
+        <strong>New Itinerary Item</strong>
+        <button type="button" class="icon-btn" data-action="showItineraryNewItem">Add New Item</button>
+      </div>
+      <div class="day-detail-inline-slot" data-inline-slot="new"></div>
+    </div>
+  `;
+
+  el.itineraryList.innerHTML = summary.activities.length
+    ? summary.activities
+        .map(
+          (item) => `
+            <div class="itinerary-row">
+              <div class="itinerary-card">
+                <div class="itinerary-card-main">
+                  <div class="itinerary-card-head">
+                    <strong>${escapeHtml(item.title)}</strong>
+                    <span class="status-pill status-${item.status}">${item.status}</span>
+                  </div>
+                  <div class="itinerary-card-meta">
+                    <span>${shortDate(item.date)} • ${item.time || "--:--"}</span>
+                    <span>${escapeHtml(item.category)}</span>
+                    <span>${normalizeCurrency(item.currency)}</span>
+                  </div>
+                  <div class="itinerary-card-sub muted">${escapeHtml(item.location || "Location TBD")}</div>
+                  ${item.notes ? `<div class="itinerary-card-notes muted">${escapeHtml(item.notes)}</div>` : ""}
+                  <div class="itinerary-card-costs">
+                    <div><span class="muted">Planned</span> ${formatEnteredMoney(item.plannedUsd, item.currency)} <span class="muted">(${money(amountToCad(item.plannedUsd, item.currency), "CAD")})</span></div>
+                    <div><span class="muted">Paid</span> ${formatEnteredMoney(item.paidUsd, item.currency)} <span class="muted">(${money(amountToCad(item.paidUsd, item.currency), "CAD")})</span></div>
+                  </div>
+                </div>
+                <div class="itinerary-card-actions">
+                  <button class="icon-btn" data-action="itineraryEditInline" data-id="${item.id}">Edit</button>
+                  <button class="icon-btn" data-action="markPaid" data-id="${item.id}">Mark Paid</button>
+                  <button class="icon-btn danger" data-action="delete" data-id="${item.id}">Delete</button>
+                </div>
+              </div>
+              <div class="day-detail-inline-slot" data-inline-slot="edit" data-item-id="${item.id}"></div>
+            </div>
+          `
+        )
+        .join("")
+    : `<div class="itinerary-empty muted">No itinerary items yet. Add your first item to start planning.</div>`;
+
+  if (uiState.itineraryFormPlacement?.type === "edit" && uiState.itineraryEditId) {
+    const active = summary.activities.find((item) => item.id === uiState.itineraryEditId);
+    if (active) {
+      setActivityFormEditMode(active);
+    } else {
+      resetActivityForm();
+      uiState.itineraryFormPlacement = null;
+    }
+  } else if (uiState.itineraryFormPlacement?.type === "new") {
+    resetActivityForm();
+    uiState.itineraryFormPlacement = { type: "new" };
+  } else {
+    hideItineraryInlineForm();
+  }
+
+  mountItineraryFormInline();
 }
 
 function resetCostItemForm() {
@@ -1456,6 +1564,7 @@ function render() {
   syncSettingsInputs();
   const summary = calculateSummary();
   renderDashboard(summary);
+  renderItineraryList(summary);
   renderActivitiesTable(summary);
   renderCostItemsTable(summary);
   renderReport(summary);
@@ -1501,6 +1610,7 @@ function addActivity(event) {
     state.activities.push(draft);
   }
   saveState();
+  uiState.itineraryFormPlacement = null;
   resetActivityForm();
   render();
 }
@@ -1623,6 +1733,33 @@ function handleTableClick(event) {
 
   saveState();
   render();
+}
+
+function handleItineraryListClick(event) {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+  const { action, id } = button.dataset;
+
+  if (action === "showItineraryNewItem") {
+    showItineraryNewItemForm();
+    render();
+    requestAnimationFrame(() => el.activityInputs.title?.focus());
+    return;
+  }
+
+  if (action === "itineraryEditInline") {
+    const item = state.activities.find((a) => a.id === id);
+    if (!item) return;
+    setActivityFormEditMode(item);
+    render();
+    requestAnimationFrame(() => el.activityInputs.title?.focus());
+    return;
+  }
+
+  // Reuse existing row actions (markPaid/delete) by delegating.
+  if (action === "markPaid" || action === "delete") {
+    handleTableClick(event);
+  }
 }
 
 function handleCostItemsTableClick(event) {
@@ -1895,6 +2032,8 @@ function cancelDashboardQuickEdit() {
 
 function cancelActivityEdit() {
   resetActivityForm();
+  hideItineraryInlineForm();
+  render();
 }
 
 function cancelCostItemEdit() {
@@ -1950,6 +2089,8 @@ el.activityFormCancelEdit.addEventListener("click", cancelActivityEdit);
 el.costItemForm.addEventListener("submit", addCostItem);
 el.costItemFormCancelEdit.addEventListener("click", cancelCostItemEdit);
 el.activitiesTableBody.addEventListener("click", handleTableClick);
+el.itineraryList?.addEventListener("click", handleItineraryListClick);
+el.itineraryComposer?.addEventListener("click", handleItineraryListClick);
 el.costItemsTableBody.addEventListener("click", handleCostItemsTableClick);
 el.dashboardItinerary.addEventListener("click", handleDashboardTimelineClick);
 el.dashboardItinerary.addEventListener("keydown", handleDashboardTimelineKeydown);

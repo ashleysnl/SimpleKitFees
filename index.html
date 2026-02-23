@@ -94,7 +94,9 @@
           <p>Build your trip itinerary with scheduled activities and costs</p>
         </div>
 
-        <form id="activityForm" class="activity-form no-print">
+        <div id="itineraryComposer" class="itinerary-composer no-print"></div>
+
+        <form id="activityForm" class="activity-form no-print" hidden>
           <input type="hidden" id="activityFormMode" value="add" />
           <input type="hidden" id="activityEditId" />
           <div class="dashboard-quick-form-header">
@@ -161,7 +163,9 @@
           <button id="activityFormSubmit" type="submit" class="btn btn-primary add-btn">Add Activity</button>
         </form>
 
-        <div class="table-wrap">
+        <div id="itineraryList" class="itinerary-list no-print"></div>
+
+        <div class="table-wrap itinerary-table-legacy" hidden>
           <table id="activitiesTable">
             <thead>
               <tr>
