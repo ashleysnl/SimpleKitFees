@@ -1443,6 +1443,7 @@ function addDashboardQuickActivity(event) {
   event.preventDefault();
   const inputs = el.dashboardQuickActivityInputs;
   const mode = inputs.mode.value;
+  const targetDate = inputs.date.value;
 
   if (mode === "edit") {
     const source = inputs.editSource.value;
@@ -1479,10 +1480,16 @@ function addDashboardQuickActivity(event) {
     } else {
       return;
     }
+    if (targetDate) {
+      uiState.dashboardSelectedDate = targetDate;
+    }
   } else {
     const item = buildActivityFromInputs(inputs);
     if (!item.title || !item.date || !item.time) return;
     state.activities.push(item);
+    if (item.date) {
+      uiState.dashboardSelectedDate = item.date;
+    }
   }
 
   saveState();

@@ -439,7 +439,10 @@
       </div>
       <div id="dashboardDayDetailList" class="day-detail-list"></div>
       <form id="dashboardQuickActivityForm" class="dashboard-quick-form">
-        <input type="hidden" id="dashboardQuickActivityDate" />
+        <label>
+          Date
+          <input type="date" id="dashboardQuickActivityDate" required />
+        </label>
         <input type="hidden" id="dashboardQuickMode" value="add" />
         <input type="hidden" id="dashboardQuickEditSource" />
         <input type="hidden" id="dashboardQuickEditId" />
