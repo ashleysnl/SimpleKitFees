@@ -26,6 +26,12 @@ body {
     linear-gradient(180deg, #eef4ff 0%, #f7fbff 35%, #f7f7fb 100%);
 }
 
+body.modal-open {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+
 html,
 body {
   -webkit-print-color-adjust: exact;
@@ -560,6 +566,7 @@ textarea {
   display: grid;
   place-items: center;
   padding: 20px;
+  overscroll-behavior: contain;
 }
 
 .dashboard-day-detail[hidden] {
@@ -579,6 +586,8 @@ textarea {
   width: min(1120px, 94vw);
   max-height: min(80vh, 760px);
   overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: #fbfdff;
@@ -592,11 +601,11 @@ textarea {
 
 #dashboardDayDetail .day-detail-head {
   position: sticky;
-  top: -1px;
+  top: 0;
   z-index: 5;
   background: #fbfdff;
-  padding: 10px 74px 8px 0;
-  margin: -2px 0 6px;
+  padding: 10px 74px 10px 0;
+  margin: 0 0 8px;
   border-bottom: 1px solid #edf2fb;
 }
 
@@ -1392,8 +1401,8 @@ td {
   }
 
   #dashboardDayDetail .day-detail-head {
-    top: -1px;
-    padding: 8px 74px 8px 0;
+    top: 0;
+    padding: 8px 74px 10px 0;
   }
 
   #dashboardDayDetailClose {

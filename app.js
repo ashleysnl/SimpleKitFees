@@ -151,6 +151,7 @@ const uiState = {
   itineraryEditId: null,
   costItemEditId: null,
 };
+let bodyScrollLockY = 0;
 
 const el = {
   settingsForm: document.getElementById("settingsForm"),
@@ -516,6 +517,7 @@ function dismissSupportBanner({ permanent = true } = {}) {
 function syncAboutModal() {
   if (!el.aboutModal) return;
   el.aboutModal.hidden = !uiState.aboutModalOpen;
+  syncBodyScrollLock();
 }
 
 function openAboutModal() {
@@ -1394,6 +1396,7 @@ function render() {
   renderBackupUi();
   syncImportReminderModal();
   syncAboutModal();
+  syncBodyScrollLock();
   renderSupportUi();
 }
 
@@ -1697,6 +1700,7 @@ function closeDashboardDayModal() {
 function syncImportReminderModal() {
   if (!el.importReminderModal) return;
   el.importReminderModal.hidden = !uiState.importReminderOpen;
+  syncBodyScrollLock();
 }
 
 function openImportReminder() {
@@ -1709,6 +1713,28 @@ function closeImportReminder() {
   uiState.importReminderOpen = false;
   syncImportReminderModal();
   renderSupportUi();
+}
+
+function syncBodyScrollLock() {
+  const hasOpenModal = Boolean(uiState.dashboardDayModalOpen || uiState.importReminderOpen || uiState.aboutModalOpen);
+  const body = document.body;
+  if (!body) return;
+
+  if (hasOpenModal) {
+    if (!body.classList.contains("modal-open")) {
+      bodyScrollLockY = window.scrollY || window.pageYOffset || 0;
+      body.style.top = `-${bodyScrollLockY}px`;
+      body.classList.add("modal-open");
+    }
+    return;
+  }
+
+  if (body.classList.contains("modal-open")) {
+    body.classList.remove("modal-open");
+    const y = Number.parseInt((body.style.top || "0").replace("px", ""), 10);
+    body.style.top = "";
+    window.scrollTo(0, Number.isFinite(y) ? Math.abs(y) : bodyScrollLockY);
+  }
 }
 
 function showImportReminderOnLoad() {
