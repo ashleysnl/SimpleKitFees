@@ -135,6 +135,7 @@ body {
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
+  max-width: 360px;
 }
 
 .support-link-btn {
@@ -1640,19 +1641,35 @@ td {
 
   .hero-actions {
     width: 100%;
-    justify-content: stretch;
+    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .hero-actions .btn {
-    flex: 1;
-  }
-
-  .hero-actions .support-link-btn {
-    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.84rem;
   }
 
   .hero-cta-row .btn {
     flex: 1 1 calc(50% - 4px);
+  }
+
+  .hero-copy {
+    margin-top: 6px;
+    font-size: 0.94rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.92rem;
+  }
+
+  .eyebrow {
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
   }
 
   .hero-perfect-list li {
