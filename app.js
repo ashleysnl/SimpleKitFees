@@ -1957,6 +1957,8 @@ function renderReport(summary) {
       ["Adults", String(f.adults)],
       ["Children", String(f.children)],
       ["Total travelers", String(f.totalTravelers)],
+      ["Total planned cost", money(f.plannedCad, "CAD")],
+      ["Total paid cost", money(f.paidCad, "CAD")],
       ["Planned per person", f.totalTravelers ? money(f.perPersonPlannedCad, "CAD") : "—"],
       ["Paid per person", f.totalTravelers ? money(f.perPersonPaidCad, "CAD") : "—"],
     ];
