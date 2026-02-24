@@ -282,9 +282,13 @@ body {
   align-items: center;
   gap: 8px;
   margin: -2px 0 10px;
+  flex-wrap: wrap;
 }
 
 .trip-snapshot-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 22px;
   height: 22px;
   min-height: 22px;
@@ -297,6 +301,10 @@ body {
   line-height: 1;
   padding: 0;
   cursor: help;
+}
+
+.trip-snapshot-auto-note .small-copy {
+  margin: 0;
 }
 
 .trip-snapshot-grid {

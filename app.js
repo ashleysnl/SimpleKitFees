@@ -626,6 +626,12 @@ function moneyDisplayRoundedFromCad(amountCad) {
   return moneyRounded(cadToDisplay(amountCad), displayCurrencyCode());
 }
 
+function numberDisplayRoundedFromCad(amountCad) {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+  }).format(Math.round(cadToDisplay(amountCad) || 0));
+}
+
 function compactDisplayFromCad(amountCad) {
   const displayValue = cadToDisplay(amountCad);
   const v = Math.abs(displayValue);
@@ -1920,19 +1926,19 @@ function renderTripSnapshot(summary) {
     {
       label: "Total Planned",
       currency: currencyLabel,
-      value: hasAnyCosts ? moneyDisplayRoundedFromCad(summary.plannedCad) : "—",
+      value: hasAnyCosts ? numberDisplayRoundedFromCad(summary.plannedCad) : "—",
       sub: hasAnyCosts ? "Forecast total (all items)" : "Add costs to calculate",
     },
     {
       label: "Total Paid",
       currency: currencyLabel,
-      value: hasAnyCosts ? moneyDisplayRoundedFromCad(summary.paidCad) : "—",
+      value: hasAnyCosts ? numberDisplayRoundedFromCad(summary.paidCad) : "—",
       sub: hasAnyCosts ? "Paid total (all items)" : "Add costs to calculate",
     },
     {
       label: "Cost / Person",
       currency: currencyLabel,
-      value: hasCostPerPerson ? moneyDisplayRoundedFromCad(summary.familySummary.perPersonPlannedCad) : "—",
+      value: hasCostPerPerson ? numberDisplayRoundedFromCad(summary.familySummary.perPersonPlannedCad) : "—",
       sub: travelerCount <= 0 ? "Set travelers" : hasAnyCosts ? "Uses adults + kids" : "Add costs to calculate",
     },
     {
@@ -2981,7 +2987,10 @@ el.importReminderImportBtn?.addEventListener("click", () => {
   closeImportReminder();
   openImportPicker({ confirmReplace: false });
 });
-el.importReminderDismissBtn?.addEventListener("click", closeImportReminder);
+el.importReminderDismissBtn?.addEventListener("click", () => {
+  closeImportReminder();
+  startPlanningFromHero();
+});
 el.aboutModal?.addEventListener("click", handleAboutModalClick);
 el.aboutModalClose?.addEventListener("click", closeAboutModal);
 el.supportBannerDismissBtn?.addEventListener("click", () => dismissSupportBanner({ permanent: true }));
