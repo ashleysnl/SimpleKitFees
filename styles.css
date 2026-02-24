@@ -666,6 +666,10 @@ label {
   font-weight: 600;
 }
 
+.form-advanced-field[hidden] {
+  display: none !important;
+}
+
 .checkbox-field {
   align-content: start;
 }
