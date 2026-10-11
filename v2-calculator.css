@@ -1,0 +1,29 @@
+/* Fee inputs precede the fee-drag takeaway and comparisons; milestone bars retain their original data and order. */
+.sk-v2[data-v2-calculator="investment-fee-calculator"] {
+  --accent:var(--v2-teal);
+  --brand:var(--v2-blue);
+  --brand-2:var(--v2-teal);
+  --danger:var(--v2-error);
+  --ink:var(--v2-navy);
+  --line:var(--v2-border);
+  --muted:var(--v2-slate);
+  --radius:var(--v2-radius-card);
+  --shadow:var(--v2-shadow-soft);
+  --success:var(--v2-success);
+}
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .v2c-main { row-gap:1.25rem; }
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-shell { gap:1.25rem; }
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .results-grid,.sk-v2[data-v2-calculator="investment-fee-calculator"] .comparison-grid { gap:.75rem; }
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-panel { padding:1.25rem; background:var(--v2-surface); border:1px solid var(--v2-border); border-radius:var(--v2-radius-card); }
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .bar-chart { background:var(--v2-tint); }
+@media(min-width:64rem) {
+ .sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-shell { display:grid; grid-template-columns:minmax(0,1fr); align-items:start; }
+}
+@media(max-width:63.99rem) {
+ .sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-shell { grid-template-columns:minmax(0,1fr); }
+ .sk-v2[data-v2-calculator="investment-fee-calculator"] .summary-card-sticky { position:static; }
+}
+@media(max-width:47.99rem) {
+ .sk-v2[data-v2-calculator="investment-fee-calculator"] :where(.form-grid,.field-grid,.advanced-grid,.input-grid,.salary-grid,.calculator-grid,.group-grid,.hero-grid,.settings-inline-grid) { grid-template-columns:minmax(0,1fr); }
+ .sk-v2[data-v2-calculator="investment-fee-calculator"] :where(.form-actions,.toolbar-actions,.action-group,.wizard-actions,.backup-actions) { flex-wrap:wrap; }
+}

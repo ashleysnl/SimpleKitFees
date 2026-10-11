@@ -141,11 +141,21 @@
       ]
   }
   </script>
+
+  <!-- Shared V2 components, bundled locally by the portable site build. -->
+  <link rel="stylesheet" href="https://core.simplekit.app/v2/foundations.css">
+  <link rel="stylesheet" href="https://core.simplekit.app/v2/system.css">
+  <link rel="stylesheet" href="https://core.simplekit.app/v2/calculators.css">
+  <link rel="stylesheet" href="./v2-calculator.css">
+  <script defer src="https://core.simplekit.app/v2/shell.js"></script>
 </head>
-<body>
+<body class="sk-v2" data-v2-system="1" data-v2-calculator="investment-fee-calculator" data-v2-family="investing">
+<a class="v2s-skip v2-button" href="#mainContent">Skip to content</a>
+<header class="v2s-header"><div class="v2s-wrap v2s-header-inner"><a class="v2s-brand" href="/" aria-label="SimpleKit home"><svg aria-hidden="true" focusable="false"><use href="https://core.simplekit.app/v2/icons/sprite.svg#calculator"></use></svg>SimpleKit</a><button type="button" class="v2s-menu" data-v2s-menu aria-controls="v2-investment-fee-calculator-nav" aria-expanded="false" hidden>Menu</button><nav class="v2s-nav" id="v2-investment-fee-calculator-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/tools/" aria-current="page">Tools</a><a href="/learn/">Learn</a><a href="/about/">About</a><a href="/support/">Support</a></nav></div></header>
+
   <div class="page-shell">
-    <header class="hero" aria-labelledby="heroTitle">
-      <div data-simplekit-header></div>
+    <header class="hero v2c-hero" aria-labelledby="heroTitle">
+      
       <div class="hero-content">
         <p class="eyebrow">SimpleKit Investment Fee Calculator • MER planning • Canada-friendly</p>
         <h1 id="heroTitle">Investment Fee Calculator Canada</h1>
@@ -212,8 +222,8 @@
       </div>
     </section>
 
-    <main class="content-stack">
-      <section id="how-fees-work" class="panel section-panel" aria-labelledby="howFeesTitle">
+    <main class="content-stack v2c-main" id="mainContent" tabindex="-1">
+      <section id="how-fees-work" class="panel section-panel v2c-surface" aria-labelledby="howFeesTitle">
         <div class="panel-header">
           <h2 id="howFeesTitle">How investment fees work</h2>
           <p>Fees are not just a line item. They reduce the return that gets to compound for you over time.</p>
@@ -245,7 +255,7 @@
       </section>
 
       <section id="calculator" class="calculator-shell" aria-labelledby="calculatorTitle">
-        <div class="panel section-panel calculator-panel">
+        <div class="panel section-panel calculator-panel v2c-surface">
           <div class="panel-header">
             <h2 id="calculatorTitle">Calculator inputs</h2>
             <p>Start simple, then open advanced assumptions if you want more detail.</p>
@@ -340,12 +350,12 @@
           </form>
         </div>
 
-        <aside id="results" class="panel section-panel results-panel" aria-labelledby="resultsTitle">
+        <aside id="results" class="panel section-panel results-panel v2c-surface" aria-labelledby="resultsTitle">
           <div class="panel-header">
             <h2 id="resultsTitle">Live results summary</h2>
             <p>As you change the assumptions, the comparison updates instantly.</p>
           </div>
-          <article class="takeaway-card">
+          <article class="takeaway-card v2c-summary">
             <span class="label">Key takeaway</span>
             <strong id="takeawayHeadline" class="takeaway-headline"></strong>
             <p id="takeawayBody" class="muted"></p>
@@ -357,7 +367,7 @@
         </aside>
       </section>
 
-      <section class="panel section-panel" aria-labelledby="comparisonTitle">
+      <section class="panel section-panel v2c-surface" aria-labelledby="comparisonTitle">
         <div class="panel-header">
           <h2 id="comparisonTitle">Portfolio comparison</h2>
           <p>The side-by-side view is the fastest way to see how a fee gap compounds over time.</p>
@@ -365,32 +375,32 @@
         <div id="comparisonGrid" class="comparison-grid"></div>
       </section>
 
-      <section id="charts" class="panel section-panel" aria-labelledby="chartsTitle">
+      <section id="charts" class="panel section-panel v2c-surface" aria-labelledby="chartsTitle">
         <div class="panel-header">
           <h2 id="chartsTitle">Visual fee drag</h2>
           <p>These charts focus on the widening gap, not just the ending number.</p>
         </div>
         <div class="chart-grid">
-          <article class="subsection chart-card">
+          <article class="subsection chart-card v2c-chart">
             <h3>Portfolio growth over time</h3>
             <div id="growthChart" class="chart-frame" aria-label="Line chart comparing portfolio growth over time"></div>
           </article>
-          <article class="subsection chart-card">
+          <article class="subsection chart-card v2c-chart">
             <h3>Ending portfolio values</h3>
             <div id="endingBarChart" class="bar-chart" aria-label="Bar chart comparing ending portfolio values"></div>
           </article>
-          <article class="subsection chart-card">
+          <article class="subsection chart-card v2c-chart">
             <h3>Widening gap over time</h3>
             <div id="gapChart" class="chart-frame" aria-label="Line chart showing the widening fee gap over time"></div>
           </article>
-          <article class="subsection chart-card">
+          <article class="subsection chart-card v2c-chart">
             <h3>Milestone fee drag</h3>
             <div id="milestoneBarChart" class="milestone-bars" aria-label="Bar chart showing fee drag at milestones"></div>
           </article>
         </div>
       </section>
 
-      <section class="panel section-panel" aria-labelledby="milestonesTitle">
+      <section class="panel section-panel v2c-surface" aria-labelledby="milestonesTitle">
         <div class="panel-header">
           <h2 id="milestonesTitle">Milestone insights</h2>
           <p>Watching the gap grow at 10, 20, 30 years helps make the lesson feel real.</p>
@@ -398,7 +408,7 @@
         <div id="milestonesGrid" class="milestone-grid"></div>
       </section>
 
-      <section id="scenarios" class="panel section-panel" aria-labelledby="scenariosTitle">
+      <section id="scenarios" class="panel section-panel v2c-surface" aria-labelledby="scenariosTitle">
         <div class="panel-header">
           <h2 id="scenariosTitle">Scenario testing</h2>
           <p>Try a few common fee comparisons and planning tweaks without touching every input manually.</p>
@@ -406,7 +416,7 @@
         <div id="scenarioGrid" class="scenario-grid"></div>
       </section>
 
-      <section class="panel section-panel" aria-labelledby="insightsTitle">
+      <section class="panel section-panel v2c-surface" aria-labelledby="insightsTitle">
         <div class="panel-header">
           <h2 id="insightsTitle">Practical insights</h2>
           <p>Balanced takeaways that keep this in the context of a full investing plan.</p>
@@ -439,7 +449,7 @@
         </div>
       </section>
 
-      <section class="panel section-panel" aria-labelledby="canadianTitle">
+      <section class="panel section-panel v2c-surface" aria-labelledby="canadianTitle">
         <div class="panel-header">
           <h2 id="canadianTitle">Canadian context</h2>
           <p>A quick reminder of where fee awareness fits into Canadian retirement planning.</p>
@@ -460,7 +470,7 @@
         </div>
       </section>
 
-      <section class="panel section-panel" aria-labelledby="relatedToolsTitle">
+      <section class="panel section-panel v2c-surface" aria-labelledby="relatedToolsTitle">
         <div class="panel-header">
           <h2 id="relatedToolsTitle">Continue your planning</h2>
           <p>Once you understand fee drag, these are the next useful questions to answer.</p>
@@ -500,7 +510,7 @@
       </section>
 
 
-      <section class="panel" aria-labelledby="canadaContextHeading-investment-fee">
+      <section class="panel v2c-surface" aria-labelledby="canadaContextHeading-investment-fee">
         <div class="panel-header">
           <div>
             <p class="section-kicker">Canadian context</p>
@@ -528,7 +538,7 @@
       </section>
 
 
-      <section id="faq" class="panel section-panel" aria-labelledby="faqTitle">
+      <section id="faq" class="panel section-panel v2c-surface" aria-labelledby="faqTitle">
         <div class="panel-header">
           <h2 id="faqTitle">Investment fee calculator guide</h2>
           <p>Indexable answers for the most common questions people ask when comparing MERs and long-term investing costs.</p>
@@ -565,7 +575,7 @@
         </div>
       </section>
       <div data-simplekit-support></div>
-      <div data-simplekit-footer></div>
+      
     </main>
   </div>
 
@@ -573,5 +583,8 @@
 
   <script type="module" src="https://core.simplekit.app/core.js"></script>
   <script src="app.js"></script>
+
+<footer class="v2s-footer"><div class="v2s-wrap v2s-footer-inner"><div class="v2s-stack"><strong>SimpleKit</strong><p class="v2s-help">Free planning tools with clearer next steps.</p></div><div class="v2s-stack"><nav aria-label="Footer navigation"><a href="/tools/">Tools</a><a href="/learn/">Learn</a><a href="/methodology/">Methodology &amp; sources</a><a href="/privacy/">Privacy</a><a href="/support/">Support</a></nav><p class="v2s-help">Estimates for planning, not financial advice. Financial inputs stay in your browser; existing site analytics are described in our privacy policy.</p></div></div></footer>
+<script defer src="https://core.simplekit.app/v2/calculators.js"></script>
 </body>
 </html>
