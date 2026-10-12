@@ -27,3 +27,8 @@
  .sk-v2[data-v2-calculator="investment-fee-calculator"] :where(.form-grid,.field-grid,.advanced-grid,.input-grid,.salary-grid,.calculator-grid,.group-grid,.hero-grid,.settings-inline-grid) { grid-template-columns:minmax(0,1fr); }
  .sk-v2[data-v2-calculator="investment-fee-calculator"] :where(.form-actions,.toolbar-actions,.action-group,.wizard-actions,.backup-actions) { flex-wrap:wrap; }
 }
+
+/* Inputs reflow with enlarged text instead of retaining intrinsic widths. */
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-form > * { min-width:0; }
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-form input,
+.sk-v2[data-v2-calculator="investment-fee-calculator"] .calculator-form select { width:100%; min-width:0; }
